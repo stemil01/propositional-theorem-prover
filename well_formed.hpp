@@ -1,7 +1,8 @@
 #ifndef _WELL_FORMED_HPP_
 #define _WELL_FORMED_HPP_
 
-#define MAX_SIZE 1001
+#define MAX_SIZE 1003   // ogranicenje je zapravo MAX_SIZE - 3 jer dodajemo
+                        // zagrade na krajeve i imamo \0 na kraju
 
 bool is_bin_symbol(char c);
 

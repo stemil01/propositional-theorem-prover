@@ -71,6 +71,10 @@ Node* create_tree(const char* input, int start, int end)
     }
     if (start > end)
         return NULL;
+
+    for (int i = start; i <= end; i++)
+        cout << input[i];
+    cout << '\n';
     
     if (start == end)
     {
