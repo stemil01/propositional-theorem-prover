@@ -8,7 +8,7 @@ bool is_bin_symbol(char c);
 
 bool is_letter(char c);
 
-bool check_brackets(const char *input);
+bool check_brackets(const char *input, int start, int end);
 
 Node* create_tree(const char* input, int start, int end);
 

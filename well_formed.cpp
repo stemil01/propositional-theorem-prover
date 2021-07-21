@@ -5,8 +5,6 @@
 #include "well_formed.hpp"
 using namespace std;
 
-static int brackets[MAX_SIZE];
-
 bool is_bin_symbol(char c)
 {
     return (c == '&') || (c == '|') || (c == '>') || (c == '~');
@@ -17,20 +15,10 @@ bool is_letter(char c)
     return isalpha(c) || (c == '0') || (c == '1');
 }    
 
-bool embraced_brackets(const char* input, int start, int end)
-{
-    return input[start] == '(' && input[end] == ')' && brackets[start] == brackets[end - 1];
-}
-
-bool blank(const char* input, int start, int end)
-{
-    return input[start] == ' ' || input[end] == ' ';
-}
-
-bool check_brackets(const char* input)
+bool check_brackets(const char* input, int start, int end)
 {
     int state = 0;
-    for (int i = 0; input[i]; i++)
+    for (int i = start; i <= end; i++)
     {
         if (input[i] == '(')
             state++;
@@ -38,17 +26,22 @@ bool check_brackets(const char* input)
             state--;
         if (state < 0)
             return false;
-        brackets[i] = state;
     }
     return state == 0;
 }
 
+bool embraced_brackets(const char* input, int start, int end)
+{
+    return input[start] == '(' && input[end] == ')' && check_brackets(input, start + 1, end - 1);
+}
+
+bool blank(const char* input, int start, int end)
+{
+    return input[start] == ' ' || input[end] == ' ';
+}
+
 Node* create_tree(const char* input, int start, int end)
 {
-    for (int i = start; i <= end; i++)
-        cout << input[i];
-    cout << '\n';
-
     while (input[start] == ' ' && start < end) start++;
     while (input[end] == ' ' && start < end) end--;
     if (start > end) return NULL;
@@ -72,10 +65,6 @@ Node* create_tree(const char* input, int start, int end)
     if (start > end)
         return NULL;
 
-    for (int i = start; i <= end; i++)
-        cout << input[i];
-    cout << '\n';
-    
     if (start == end)
     {
         if (is_letter(input[start]))
@@ -85,7 +74,7 @@ Node* create_tree(const char* input, int start, int end)
 
     for (int i = start + 1; i <= end; i++) // start + 1 jer ako je binarni operator na poziciji start onda je los format
         if (is_bin_symbol(input[i]))
-            if (brackets[start - 1] == brackets[i - 1] && brackets[i] == brackets[end]) // PROBLEM !! start - 1 moze biti van dosega !!
+            if (check_brackets(input, start, i - 1) && check_brackets(input, i + 1, end))
             {
                 Node *left = create_tree(input, start, i - 1);
                 Node *right = create_tree(input, i + 1, end);
@@ -99,13 +88,23 @@ Node* create_tree(const char* input, int start, int end)
                 return NULL;
             }
     if (input[start] == '*')
-        return create_tree(input, start + 1, end);
+    {
+        Node *right = create_tree(input, start + 1, end);
+        if (right)
+        {
+            Node *root = create_node('*');
+            root->right = right;
+            return root;
+        }
+        return NULL;
+    }
     return NULL;
 }
 
 Node *check_well_form(const char *input)
 {
-    if (!check_brackets(input))
+    int length = strlen(input);
+    if (!check_brackets(input, 0, length - 1))
         return NULL;
-    return create_tree(input, 0, strlen(input) - 1);
+    return create_tree(input, 0, length - 1);
 }
