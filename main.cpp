@@ -8,12 +8,8 @@ using namespace std;
 int main()
 {
     // get input string and add parenthesis at both ends
-    char input[MAX_SIZE];
-    cin.getline(input + 1, MAX_SIZE - 3);
-    input[0] = '(';
-    int length = strlen(input);
-    input[length] = ')';
-    input[length + 1] = '\0';
+    char raw_input[MAX_SIZE];
+    cin.getline(raw_input + 1, MAX_SIZE - 3);
 
     Node *root = check_well_form(input);
     if (root)

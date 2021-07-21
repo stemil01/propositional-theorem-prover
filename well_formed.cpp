@@ -5,6 +5,17 @@
 #include "well_formed.hpp"
 using namespace std;
 
+void input_form(const char* input, char* tranformed)
+{
+    int ind = 0;
+    tranformed[ind++] = '(';
+    for (int i = 0; input[i]; i++)
+        if (input[i] != ' ')
+            tranformed[ind++] = input[i];
+    tranformed[ind++] = ')';
+    tranformed[ind] = '\0';
+}
+
 bool is_bin_symbol(char c)
 {
     return (c == '&') || (c == '|') || (c == '>') || (c == '~');
@@ -42,6 +53,10 @@ bool blank(const char* input, int start, int end)
 
 Node* create_tree(const char* input, int start, int end)
 {
+    for (int i = start; i <= end; i++)
+        cout << input[i];
+    cout << '\n';
+
     while (input[start] == ' ' && start < end) start++;
     while (input[end] == ' ' && start < end) end--;
     if (start > end) return NULL;
