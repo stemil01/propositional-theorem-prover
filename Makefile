@@ -1,0 +1,2 @@
+test:
+	g++ -Wall *.cpp
