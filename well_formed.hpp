@@ -10,6 +10,10 @@ bool is_letter(char c);
 
 bool check_brackets(const char *input, int start, int end);
 
+bool embraced_brackets(const char* input, int start, int end);
+
+bool blank(const char* input, int start, int end);
+
 Node* create_tree(const char* input, int start, int end);
 
 // checks well form of input and creates a tree with it
