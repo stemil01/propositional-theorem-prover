@@ -14,3 +14,13 @@ Node* create_node(char symbol)
     new_node->right = NULL;
     return new_node;
 }
+
+void print_tree(Node* root)
+{
+    if (root)
+    {
+        print_tree(root->left);
+        cout << root->symbol << " ";
+        print_tree(root->right);
+    }
+}

@@ -10,4 +10,6 @@ typedef struct node
 
 Node* create_node(char symbol);
 
+void print_tree(Node* root);
+
 #endif
