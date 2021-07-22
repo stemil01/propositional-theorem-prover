@@ -7,7 +7,6 @@ using namespace std;
 
 int main()
 {
-    // get input string and add parenthesis at both ends
     char input[MAX_SIZE];
     cin.getline(input, MAX_SIZE - 2);
     format(input);
