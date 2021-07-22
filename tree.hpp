@@ -12,4 +12,6 @@ Node* create_node(char symbol);
 
 void print_tree(Node* root);
 
+void print2D(Node *root);
+
 #endif

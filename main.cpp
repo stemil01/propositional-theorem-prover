@@ -14,7 +14,7 @@ int main()
     if (root)
     {
         cout << "valid form: ";
-        print_tree(root);
+        print2D(root);
         cout << '\n';
     }
     else
