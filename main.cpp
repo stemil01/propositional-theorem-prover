@@ -9,7 +9,6 @@ int main()
 {
     char input[MAX_SIZE];
     cin.getline(input, MAX_SIZE - 2);
-    format(input);
 
     Node *root = check_well_form(input);
     if (root)

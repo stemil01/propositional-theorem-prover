@@ -19,6 +19,6 @@ bool blank(const char* input, int start, int end);
 Node* create_tree(const char* input, int start, int end);
 
 // checks well form of input and creates a tree with it
-Node *check_well_form(const char *input);
+Node *check_well_form(char *input);
 
 #endif
