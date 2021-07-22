@@ -5,15 +5,17 @@
 #include "well_formed.hpp"
 using namespace std;
 
-void input_form(const char* input, char* tranformed)
+void format(char* input)
 {
+    char transformed[MAX_SIZE];
     int ind = 0;
-    tranformed[ind++] = '(';
+    transformed[ind++] = '(';
     for (int i = 0; input[i]; i++)
         if (input[i] != ' ')
-            tranformed[ind++] = input[i];
-    tranformed[ind++] = ')';
-    tranformed[ind] = '\0';
+            transformed[ind++] = input[i];
+    transformed[ind++] = ')';
+    transformed[ind] = '\0';
+    strcpy(input, transformed);
 }
 
 bool is_bin_symbol(char c)
@@ -46,36 +48,14 @@ bool embraced_brackets(const char* input, int start, int end)
     return input[start] == '(' && input[end] == ')' && check_brackets(input, start + 1, end - 1);
 }
 
-bool blank(const char* input, int start, int end)
-{
-    return input[start] == ' ' || input[end] == ' ';
-}
-
 Node* create_tree(const char* input, int start, int end)
 {
-    for (int i = start; i <= end; i++)
-        cout << input[i];
-    cout << '\n';
+    bool embraced = (end - start + 1 > 2) && embraced_brackets(input, start, end);
 
-    while (input[start] == ' ' && start < end) start++;
-    while (input[end] == ' ' && start < end) end--;
-    if (start > end) return NULL;
-
-    if (end - start + 1 > 2 && !embraced_brackets(input, start, end))
-        return NULL;
-    // uklanjanje spoljnih zagrada i spoljnih blanko znakova
-    while (start <= end && (embraced_brackets(input, start, end) || blank(input, start, end)))
+    while (start <= end && embraced_brackets(input, start, end))
     {
-        if (!blank(input, start, end))
-        {
-            start++;
-            end--;
-        }
-        else
-        {
-            if (input[start] == ' ') start++;
-            if (input[end] == ' ') end--;
-        }
+        start++;
+        end--;
     }
     if (start > end)
         return NULL;
@@ -93,7 +73,7 @@ Node* create_tree(const char* input, int start, int end)
             {
                 Node *left = create_tree(input, start, i - 1);
                 Node *right = create_tree(input, i + 1, end);
-                if (left && right)
+                if (left && right && embraced)
                 {
                     Node *root = create_node(input[i]);
                     root->left = left;

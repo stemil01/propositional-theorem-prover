@@ -4,6 +4,8 @@
 #define MAX_SIZE 1003   // ogranicenje je zapravo MAX_SIZE - 3 jer dodajemo
                         // zagrade na krajeve i imamo \0 na kraju
 
+void format(char* input);
+
 bool is_bin_symbol(char c);
 
 bool is_letter(char c);
