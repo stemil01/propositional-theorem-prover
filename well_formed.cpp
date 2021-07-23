@@ -96,7 +96,7 @@ Node* create_tree(const char* input, int start, int end)
     return NULL;
 }
 
-Node *check_well_form(char *input)
+Node* check_well_form(char *input)
 {
     format(input);
     int length = strlen(input);
