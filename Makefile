@@ -1,6 +1,8 @@
-prover: main.o tree.o well_formed.o
-	mkdir -p run
+prover: run main.o tree.o well_formed.o
 	g++ -Wall run/main.o run/tree.o run/well_formed.o
+
+run:
+	mkdir -p run
 
 main.o: main.cpp
 	g++ -c main.cpp -o run/main.o
