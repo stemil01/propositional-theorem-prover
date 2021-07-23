@@ -75,10 +75,29 @@ Node* create_tree(const char* input, int start, int end)
                 Node *right = create_tree(input, i + 1, end);
                 if (left && right && embraced)
                 {
-                    Node *root = create_node(input[i]);
-                    root->left = left;
-                    root->right = right;
-                    return root;
+                    if (input[i] == '~')
+                    {
+                        // decomposing equivalence as konjunction of two implications
+                        // e.g. A ~ B to (A > B) & (B > A)
+                        Node *left_implication = create_node('>');
+                        left_implication->left = left;
+                        left_implication->right = right;
+                        Node *right_implication = create_node('>');
+                        right_implication->left = right;
+                        right_implication->right = left;
+
+                        Node *root = create_node('&');
+                        root->left = left_implication;
+                        root->right = right_implication;
+                        return root;
+                    }
+                    else
+                    {
+                        Node *root = create_node(input[i]);
+                        root->left = left;
+                        root->right = right;
+                        return root;
+                    }
                 }
                 return NULL;
             }
