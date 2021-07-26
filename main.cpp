@@ -1,97 +1,209 @@
 #include <bits/stdc++.h>
+#include "tree.hpp"
+#include "well_formed.hpp"
 
 using namespace std;
 
-int current = 0, previous = 0; //variables that represent current and previous state//
-
-/*
-0 - no input
-1 - identified letter
-2 - identified negation
-3 - identified operator
-4 - identified (
-5 - identified )
-*/
-
-stack <char> Symbol_stack;
-
-bool is_letter(char s)
+typedef struct Tnode
 {
-    return (s >= 'a' && s <= 'z');
+    char sign;
+    Node *root;
+    bool used;
+    struct Tnode *left, *right;
+
+}Tnode;
+
+Tnode* create_tnode(char s, Node *root)
+{
+    Tnode *tnode = new Tnode;
+    if(tnode == NULL)
+        return NULL;
+
+    tnode->sign = s;
+    tnode->root = root;
+    tnode->left = NULL;
+    tnode->right = NULL;
+    tnode->used = false;
 }
 
-bool is_operator(char s)
+static vector<Tnode*> leaves;
+
+void find_leaves(Tnode *node)
 {
-    return (s == '&' || s == '|' || s == '>' || s == '~');
+    if(node == NULL)
+        return ;
+
+    if(node->left == NULL && node->right == NULL)
+        leaves.push_back(node);
+
+    find_leaves(node->left);
+    find_leaves(node->right);
 }
 
-bool read_symbol(char s)
+Tnode* find_root(Tnode* root)
 {
-    if(current != 1 && current != 5 && is_letter(s))
+    Tnode *left, *right;
+
+    if(root && !(root->used))
+        return root;
+
+    if(root && root->left == NULL)
+        left =  NULL;
+    else
+        left = find_root(root->left);
+
+    if(root && root->right == NULL)
+        right = NULL;
+    else
+        right = find_root(root->right);
+
+    return left ? left : right;
+
+}
+
+//customized print2DUtil for signed formula
+static const int COUNT = 7;
+
+void print_signed_2D(Tnode *troot, int space)
+{
+    if(troot == NULL)
+        return ;
+
+    space += COUNT;
+
+    print_signed_2D(troot->right, space);
+
+    printf("\n");
+
+    for(int i = COUNT; i < space ; i++)
+        printf(" ");
+
+    cout<<troot->sign<< " ";
+    print_tree(troot->root);
+    cout<<'\n';
+
+    print_signed_2D(troot->left, space);
+
+}
+
+void tableuax(Tnode *root)//moze manje ruzno da izgleda, ali sam gmaz
+{
+    while(Tnode *tnode = find_root(root))
     {
-        previous = current;
-        current = 1;
+        tnode->used = true;
+
+        find_leaves(tnode);
+
+        //ALFA FORMULAS
+
+        if(tnode->sign == 'T' && tnode->root->symbol == '&') // T A&B
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('T', tnode->root->left);
+                    Tnode *tnode2 = create_tnode('T', tnode->root->right);
+                    leaf->left = tnode1;
+                    tnode1->left = tnode2;
+                }
+            }
+        if(tnode->sign == 'F' && tnode->root->symbol == '|') // F A|B
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('F', tnode->root->left);
+                    Tnode *tnode2 = create_tnode('F', tnode->root->right);
+                    leaf->left = tnode1;
+                    tnode1->left = tnode2;
+                }
+            }
+        if(tnode->sign == 'F' && tnode->root->symbol == '>') // F A>B
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('T', tnode->root->left);
+                    Tnode *tnode2 = create_tnode('F', tnode->root->right);
+                    leaf->left = tnode1;
+                    tnode1->left = tnode2;
+                }
+            }
+        if(tnode->sign == 'F' && tnode->root->symbol == '*') // F *A
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('T', tnode->root->right);
+                    Tnode *tnode2 = create_tnode('T', tnode->root->right);
+                    leaf->left = tnode1;
+                    tnode1->left = tnode2;
+                }
+            }
+        if(tnode->sign == 'T' && tnode->root->symbol == '*') // T *A
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('F', tnode->root->right);
+                    Tnode *tnode2 = create_tnode('F', tnode->root->right);
+                    leaf->left = tnode1;
+                    tnode1->left = tnode2;
+                }
+            }
+
+        //BETA FORMULAS
+
+        if(tnode->sign == 'F' && tnode->root->symbol == '&') // F A&B
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('F', tnode->root->left);
+                    Tnode *tnode2 = create_tnode('F', tnode->root->right);
+                    leaf->left = tnode1;
+                    leaf->right = tnode2;
+                }
+            }
+        if(tnode->sign == 'T' && tnode->root->symbol == '|') // T A|B
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('T', tnode->root->left);
+                    Tnode *tnode2 = create_tnode('T', tnode->root->right);
+                    leaf->left = tnode1;
+                    leaf->right = tnode2;
+                }
+            }
+        if(tnode->sign == 'T' && tnode->root->symbol == '>') // T A>B
+            {
+                for(Tnode *leaf : leaves)
+                {
+                    Tnode *tnode1 = create_tnode('F', tnode->root->left);
+                    Tnode *tnode2 = create_tnode('T', tnode->root->right);
+                    leaf->left = tnode1;
+                    leaf->right = tnode2;
+                }
+            }
+
+        leaves.clear();//empty the vector for leaves of next unused signed node
     }
-
-    else if(current != 1 && current != 5 && s == '*')
-    {
-        previous = current;
-        current = 2;
-    }
-
-    else if(current != 1 && s == '(')
-    {
-        Symbol_stack.push('(');
-        previous = current;
-        current = 4;
-    }
-
-    else if((current == 1 || current == 5) && s == ')' && Symbol_stack.size() >= 1)
-    {
-        Symbol_stack.pop();
-        previous = current;
-        current = 5;
-    }
-
-    else if(current != 3 && current != 2 && previous != 3 && is_operator(s))
-    {
-        previous = current;
-        current = 3;
-    }
-
-    else return false;
-
-    return true;
-
 }
 
 int main()
 {
-    string s;
+    char input[MAX_SIZE];
+    cin.getline(input, MAX_SIZE - 2);
 
-    getline(cin,s);
-
-    int n = s.length();
-    int i;
-
-    if(s[0] != '*' && s[0] != '(')
+    Node *root = check_well_form(input);
+    if (root)
     {
-        cout << "nije dobar";
-        return 0;
+        cout << "valid form: ";
+        print2D(root);
+        cout << '\n';
     }
-
-
-    for(i = 0 ; i < n ; i++)
-    {
-        if(!read_symbol(s[i]))
-            break;
-    }
-
-    if(i == n && Symbol_stack.size() == 0)
-        cout << "dobar";
-
     else
-        cout << "nije dobar";
+        cout << "invalid form\n";
+
+    Tnode *troot = create_tnode('F', root);//starting tableaux with F "formula"
+
+    tableuax(troot);
+
+    print_signed_2D(troot, 0);
 
 
     return 0;
