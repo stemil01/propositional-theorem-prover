@@ -83,8 +83,8 @@ Node* create_tree(const char* input, int start, int end)
                         left_implication->left = left;
                         left_implication->right = right;
                         Node *right_implication = create_node('>');
-                        right_implication->left = right;
-                        right_implication->right = left;
+                        right_implication->left = copy_tree(right);
+                        right_implication->right = copy_tree(left);
 
                         Node *root = create_node('&');
                         root->left = left_implication;

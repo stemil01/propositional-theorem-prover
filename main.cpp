@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <vector>
 #include "tree.hpp"
 #include "well_formed.hpp"
+#include "tableaux.hpp"
 using namespace std;
 
 int main()
@@ -13,12 +15,16 @@ int main()
     Node *root = check_well_form(input);
     if (root)
     {
-        cout << "valid form: ";
-        print2D(root);
-        cout << '\n';
+        Tnode *tableaux = create_tableaux(root);
+        if (tableaux)
+        {
+            t_print2D(tableaux); cout << '\n';
+            t_free_tree(tableaux);
+        }
+        free_tree(root);
     }
     else
-        cout << "invalid form\n";
+        printf("invalid unput\n");
 
     return 0;
 }
