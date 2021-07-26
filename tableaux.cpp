@@ -38,6 +38,69 @@ Tnode* find_root(Tnode* root)
     return left ? left : right;
 }
 
+void apply_rules(Tnode* tnode, Tnode* leaf)
+{
+    //ALFA FORMULAS
+    if (tnode->sign == 'T' && tnode->root->symbol == '&') // T A&B
+    {
+        Tnode *tnode1 = create_tnode('T', tnode->root->left);
+        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        leaf->left = tnode1;
+        tnode1->left = tnode2;
+    }
+    if (tnode->sign == 'F' && tnode->root->symbol == '|') // F A|B
+    {
+        Tnode *tnode1 = create_tnode('F', tnode->root->left);
+        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        leaf->left = tnode1;
+        tnode1->left = tnode2;
+    }
+    if (tnode->sign == 'F' && tnode->root->symbol == '>') // F A>B
+    {
+        Tnode *tnode1 = create_tnode('T', tnode->root->left);
+        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        leaf->left = tnode1;
+        tnode1->left = tnode2;
+    }
+    if (tnode->sign == 'F' && tnode->root->symbol == '*') // F *A
+    {
+        Tnode *tnode1 = create_tnode('T', tnode->root->right);
+        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        leaf->left = tnode1;
+        tnode1->left = tnode2;
+    }
+    if (tnode->sign == 'T' && tnode->root->symbol == '*') // T *A
+    {
+        Tnode *tnode1 = create_tnode('F', tnode->root->right);
+        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        leaf->left = tnode1;
+        tnode1->left = tnode2;
+    }
+
+    //BETA FORMULAS
+    if (tnode->sign == 'F' && tnode->root->symbol == '&') // F A&B
+    {
+        Tnode *tnode1 = create_tnode('F', tnode->root->left);
+        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        leaf->left = tnode1;
+        leaf->right = tnode2;
+    }
+    if (tnode->sign == 'T' && tnode->root->symbol == '|') // T A|B
+    {
+        Tnode *tnode1 = create_tnode('T', tnode->root->left);
+        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        leaf->left = tnode1;
+        leaf->right = tnode2;
+    }
+    if (tnode->sign == 'T' && tnode->root->symbol == '>') // T A>B
+    {
+        Tnode *tnode1 = create_tnode('F', tnode->root->left);
+        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        leaf->left = tnode1;
+        leaf->right = tnode2;
+    }
+}
+
 Tnode* create_tableuax(Node* root_formula)
 {
     Tnode *root = create_tnode('F', root_formula); // starting tableaux with F "formula"
@@ -48,89 +111,8 @@ Tnode* create_tableuax(Node* root_formula)
 
         find_leaves(tnode);
 
-        //ALFA FORMULAS
-        if (tnode->sign == 'T' && tnode->root->symbol == '&') // T A&B
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('T', tnode->root->left);
-                Tnode *tnode2 = create_tnode('T', tnode->root->right);
-                leaf->left = tnode1;
-                tnode1->left = tnode2;
-            }
-        }
-        if (tnode->sign == 'F' && tnode->root->symbol == '|') // F A|B
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('F', tnode->root->left);
-                Tnode *tnode2 = create_tnode('F', tnode->root->right);
-                leaf->left = tnode1;
-                tnode1->left = tnode2;
-            }
-        }
-        if (tnode->sign == 'F' && tnode->root->symbol == '>') // F A>B
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('T', tnode->root->left);
-                Tnode *tnode2 = create_tnode('F', tnode->root->right);
-                leaf->left = tnode1;
-                tnode1->left = tnode2;
-            }
-        }
-        if (tnode->sign == 'F' && tnode->root->symbol == '*') // F *A
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('T', tnode->root->right);
-                Tnode *tnode2 = create_tnode('T', tnode->root->right);
-                leaf->left = tnode1;
-                tnode1->left = tnode2;
-            }
-        }
-        if (tnode->sign == 'T' && tnode->root->symbol == '*') // T *A
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('F', tnode->root->right);
-                Tnode *tnode2 = create_tnode('F', tnode->root->right);
-                leaf->left = tnode1;
-                tnode1->left = tnode2;
-            }
-        }
-
-        //BETA FORMULAS
-        if (tnode->sign == 'F' && tnode->root->symbol == '&') // F A&B
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('F', tnode->root->left);
-                Tnode *tnode2 = create_tnode('F', tnode->root->right);
-                leaf->left = tnode1;
-                leaf->right = tnode2;
-            }
-        }
-        if (tnode->sign == 'T' && tnode->root->symbol == '|') // T A|B
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('T', tnode->root->left);
-                Tnode *tnode2 = create_tnode('T', tnode->root->right);
-                leaf->left = tnode1;
-                leaf->right = tnode2;
-            }
-        }
-        if (tnode->sign == 'T' && tnode->root->symbol == '>') // T A>B
-        {
-            for (Tnode *leaf : leaves)
-            {
-                Tnode *tnode1 = create_tnode('F', tnode->root->left);
-                Tnode *tnode2 = create_tnode('T', tnode->root->right);
-                leaf->left = tnode1;
-                leaf->right = tnode2;
-            }
-        }
+        for (Tnode *leaf : leaves)
+            apply_rules(tnode, leaf);
 
         leaves.clear(); //empty the vector for leaves of next unused signed node
     }
