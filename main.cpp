@@ -24,6 +24,8 @@ Tnode* create_tnode(char s, Node *root)
     tnode->left = NULL;
     tnode->right = NULL;
     tnode->used = false;
+
+    return tnode;
 }
 
 static vector<Tnode*> leaves;
