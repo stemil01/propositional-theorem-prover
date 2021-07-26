@@ -1,18 +1,27 @@
 #include <iostream>
 #include "tree.hpp"
 #include "well_formed.hpp"
+#include "tableaux.hpp"
 using namespace std;
 
 int main()
 {
-    string input;
-    cin >> input;
+    char input[MAX_SIZE];
+    cin.getline(input, MAX_SIZE - 2);
 
-    Node *root = create_node('a');
-    if (root == NULL)
-        cout << "error\n";
+    Node *root = check_well_form(input);
+    if (root)
+    {
+        Tnode *tableaux = create_tableuax(root);
+        if (tableaux)
+        {
+            print_signed_2D(tableaux, 0);
+            t_free_tree(tableaux);
+        }
+        free_tree(root);
+    }
     else
-        cout << (*root).symbol << '\n';
+        printf("invalid unput\n");
 
     return 0;
 }
