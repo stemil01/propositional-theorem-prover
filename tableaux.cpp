@@ -18,14 +18,14 @@ void find_leaves(Tnode* node, vector<Tnode*> &leaves)
     }
 }
 
-Tnode* find_unused(Tnode* root)
+Tnode* find_next(Tnode* root)
 {
     if (root)
     {
-        if (!root->used)
+        if (!root->used && !root->closed)
             return root;
-        Tnode *left = find_unused(root->left);
-        Tnode *right = find_unused(root->right);
+        Tnode *left = find_next(root->left);
+        Tnode *right = find_next(root->right);
         return left ? left : right;
     }
     return NULL;
@@ -122,7 +122,7 @@ void check_tableaux(Tnode* node)
         {
             occurence[node->sign][node->formula->symbol]++;
             if (occurence[1 - (node->sign)][node->formula->symbol] > 0) // if there is occurence of letter with opposite sign
-                node->used = true;
+                node->closed = true;
         }
 
         check_tableaux(node->left);
@@ -133,10 +133,10 @@ void check_tableaux(Tnode* node)
         if (node->right && is_letter(node->right->formula->symbol))
             occurence[node->right->sign][node->right->formula->symbol]--;
 
-        // if all children are used, then the parent is used as well
+        // if all children are closed, then the parent is closed as well
         if (node->left || node->right)
-            if ((node->left == NULL || node->left->used) && (node->right == NULL || node->right->used))
-                node->used = true;
+            if ((node->left == NULL || node->left->closed) && (node->right == NULL || node->right->closed))
+                node->closed = true;
     }
 }
 
@@ -145,20 +145,16 @@ Tnode* create_tableaux(Node* formula)
     Tnode *root = create_tnode(formula);
     root->sign = F;
     Tnode *node;
-    while ((node = find_unused(root)))
+    while ((node = find_next(root)))
     {
         vector<Tnode*> leaves;
         find_leaves(node, leaves);
 
         for (auto leaf: leaves)
-            if (!leaf->used)
+            if (!leaf->closed)
                 apply_rule(node, leaf);
 
-        for (int i = 0; i < 2; i++)
-            for (int j = 0; j < 128; j++)
-                occurence[i][j] = 0;
-
-        check_tableaux(node);
+        check_tableaux(root);
         node->used = true;
     }
     return root;

@@ -17,7 +17,7 @@ typedef struct tnode
 {
     Sign sign;
     Node *formula;
-    bool used;
+    bool used, closed;
     struct tnode *left, *right;
 } Tnode;
 

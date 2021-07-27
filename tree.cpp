@@ -77,10 +77,13 @@ Tnode* create_tnode(Node* formula)
     Tnode *new_tnode = new Tnode;
     if (new_tnode == NULL)
         return NULL;
+
     new_tnode->formula = formula;
     new_tnode->left = NULL;
     new_tnode->right = NULL;
     new_tnode->used = false;
+    new_tnode->closed = false;
+
     return new_tnode;
 }
 
@@ -146,6 +149,7 @@ void t_print2DUtil(Tnode *root, int space)
     for (int i = COUNT; i < space; i++)
         printf(" ");
     root->sign == T ? cout << "T " : cout << "F ";
+    root->closed ? cout << "x " : cout << "o ";
     print_formula(root->formula);
  
     // Process left child

@@ -4,7 +4,7 @@ using namespace std;
 
 void find_leaves(Tnode* node, vector<Tnode*> &leaves);
 
-Tnode* find_unused(Tnode* root);
+Tnode* find_next(Tnode* root);
 
 void apply_rule(Tnode* leaf, Sign sign, char symbol);
 

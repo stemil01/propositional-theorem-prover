@@ -19,6 +19,10 @@ int main()
         if (tableaux)
         {
             t_print2D(tableaux); cout << '\n';
+            if (tableaux->closed)
+                cout << "formula is tautology\n";
+            else
+                cout << "formula is not tautology\n";
             t_free_tree(tableaux);
         }
         free_tree(root);
