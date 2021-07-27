@@ -101,11 +101,11 @@ void apply_rules(Tnode* tnode, Tnode* leaf)
     }
 }
 
-Tnode* create_tableuax(Node* root_formula)
+Tnode* create_tableuax(Node* root)
 {
-    Tnode *root = create_tnode('F', root_formula); // starting tableaux with F "formula"
+    Tnode *troot = create_tnode('F', root); // starting tableaux with F "formula"
 
-    while (Tnode *tnode = find_root(root))
+    while (Tnode *tnode = find_root(troot))
     {
         tnode->used = true;
 
@@ -117,5 +117,5 @@ Tnode* create_tableuax(Node* root_formula)
         leaves.clear(); // empty the vector for leaves of next unused signed node
     }
 
-    return root;
+    return troot;
 }
