@@ -150,7 +150,7 @@ Tnode* create_tableaux(Node* formula)
         vector<Tnode*> leaves;
         find_leaves(node, leaves);
 
-        for (auto leaf: leaves)
+        for (auto leaf : leaves)
             if (!leaf->closed)
                 apply_rule(node, leaf);
 
@@ -158,4 +158,18 @@ Tnode* create_tableaux(Node* formula)
         node->used = true;
     }
     return root;
+}
+
+void countermodel(Tnode* root, vector<Sign>& interpretation)
+{
+    if (root && !root->closed)
+    {
+        if (is_letter(root->formula->symbol))
+            interpretation[root->formula->symbol] = root->sign;
+        countermodel(root->left);
+        countermodel(root->right)
+        if (root->left == NULL && root->right == NULL)
+            for (auto letter : interpretation)
+                cout << 
+    }
 }
