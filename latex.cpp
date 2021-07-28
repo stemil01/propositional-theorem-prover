@@ -14,17 +14,17 @@ vector<Tnode*>Level;
 void latex_symbol(Node* root, ofstream& file)
 {
     if(root->symbol == '&')
-        file << "\\land";
+        file << "\\land ";
     else if(root->symbol == '|')
-        file << "\\lor";
+        file << "\\lor ";
     else if(root->symbol == '>')
-        file << "\\Rightarrow";
+        file << "\\Rightarrow ";
     else if(root->symbol == '*')
-        file << "\\neg";
+        file << "\\neg ";
     else if(root->symbol == '1')
-        file << "\\top";
+        file << "\\top ";
     else if(root->symbol == '0')
-        file << "\\bot";
+        file << "\\bot ";
     else file << root->symbol;
 }
 
