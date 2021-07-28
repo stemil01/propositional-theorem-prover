@@ -5,7 +5,10 @@
 #include "tableaux.hpp"
 using namespace std;
 
-static int occurence[2][128];
+static int occurence[2][MAX_CHAR];
+
+static Sign interpretation[MAX_CHAR];
+static bool in_formula[MAX_CHAR];
 
 void find_leaves(Tnode* node, vector<Tnode*> &leaves)
 {
@@ -160,16 +163,27 @@ Tnode* create_tableaux(Node* formula)
     return root;
 }
 
-void countermodel(Tnode* root, vector<Sign>& interpretation)
+void countermodel(Tnode* root)
 {
-    if (root && !root->closed)
+    if (root)
     {
         if (is_letter(root->formula->symbol))
+        {
             interpretation[root->formula->symbol] = root->sign;
-        countermodel(root->left);
-        countermodel(root->right)
+            if (!in_formula[root->formula->symbol])
+                in_formula[root->formula->symbol] = true;
+        }
         if (root->left == NULL && root->right == NULL)
-            for (auto letter : interpretation)
-                cout << 
+        {
+            for (int i = 0; i < MAX_CHAR; i++)
+                if (in_formula[i])
+                    cout << "I(" << (char)i << ") = " << interpretation[i] << "; ";
+            cout << '\n';
+        }
+        else
+        {
+            countermodel(root->left);
+            countermodel(root->right);
+        }
     }
 }

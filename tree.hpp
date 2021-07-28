@@ -4,6 +4,7 @@ using namespace std;
 
 #define MAX_SIZE 1003   // ogranicenje je zapravo MAX_SIZE - 3 jer dodajemo
                         // zagrade na krajeve i imamo \0 na kraju
+#define MAX_CHAR 128
 
 enum Sign { F, T };
 
