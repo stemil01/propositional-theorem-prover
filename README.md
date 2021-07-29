@@ -32,7 +32,7 @@ Then all other nodes are obtained by applying one of two following rules, named 
   <img width="40%" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png">
 </p>
 
-| Alpha rule | Beta rule |
-|--|--|
-|<table> <tr><td>`T A & B`</td><td>`T A`</td><td>`T B`</td></tr><tr><td><code>F A &#124; B </code></td><td>`F A`<td>`F B`</tr><tr><td>`F A > B`</td><td>`T A`<td>`F B`</tr><tr><td>`T *A`</td><td>`F A`<td>`F A`</tr><tr><td>`F *A`</td><td>`F A`<td>`F A`</tr></table>| <table><tr><td>`F A & B`</td><td>`F A`</td><td>`F B`</td></tr><tr><td><code>T A &#124; B </code></td><td>`T A`</td><td>`T B`</td></tr><tr><td>`T A > B`</td><td>`F A`</td><td>`T B`</td></tr></table>|
-
+| Alpha rule | Beta rule | |
+|--|--|--|
+|<table> <tr><td>`T A & B`</td><td>`T A`</td><td>`T B`</td></tr><tr><td><code>F A &#124; B </code></td><td>`F A`<td>`F B`</tr><tr><td>`F A > B`</td><td>`T A`<td>`F B`</tr><tr><td>`T *A`</td><td>`F A`<td>`F A`</tr><tr><td>`F *A`</td><td>`F A`<td>`F A`</tr></table>| <table><tr><td>`F A & B`</td><td>`F A`</td><td>`F B`</td></tr><tr><td><code>T A &#124; B </code></td><td>`T A`</td><td>`T B`</td></tr><tr><td>`T A > B`</td><td>`F A`</td><td>`T B`</td></tr></table>|<table> 
+<p align="center"> <img width="60%" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png"> </p></table>|
