@@ -136,11 +136,13 @@ void generate_tex(Tnode* root, ofstream& file)
 
 void tex_file(Tnode* root)
 {
-     ofstream file("tableaux.tex");
+    find_positions(root, 0, TEXT_WIDTH);
 
-     file << "\\documentclass{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage{changepage}\n\\begin{document}\n";
+    ofstream file("tableaux.tex");
 
-     generate_tex(root, file);
+    file << "\\documentclass{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage{changepage}\n\\begin{document}\n";
 
-     file << "\\end{document}\n";
+    generate_tex(root, file);
+
+    file << "\\end{document}\n";
 }
