@@ -23,4 +23,9 @@ Default option won't find countermodels, but if chosen it will print all possibl
 The last part will generate LaTeX file *tableaux.tex* for visual representation of tableaux.
 
 ## How it works?
+Method of analytic tableaux works by creating a binart tree called *tableaux* in which every node consists of propositional formula and symbol *F* or *T*.
+Initial formula is places in root of tableaux with symbol *F*.
+Then all other nodes are obtained by applying one of two rules, alpha and beta, both of them geretating two nodes as shown in picture bellow.
+
+![tableaux_rules](https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png)
 
