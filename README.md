@@ -1,6 +1,6 @@
 # Automated theorem prover for propositinal logic
 The program check wheter the propositial formula is tautology and in negative case prints all countermodels for it (i.e. all interpretation for which the formula is false).
-For that the method of analytic tableaux is used and program will generate complete tableaux for a given formula.
+The method of analytic tableaux is used for that and program will generate complete tableaux for a given formula.
 
 ## Running
 Everything was written in C++, so any standard compiler can do the job. In this case, we used GCC and included the *Makefile* for easier compilation with `make`.
@@ -12,7 +12,7 @@ Entered input is then checked for validity in a way that formula is considered v
 * is a letter (english letter character, either lowercase or capital)
 * is a logical constant (`0` or `1`)
 * if `A` and `B` are well-formed propositinal formulae then `(*A)`, `(A & B)`, `(A | B)`, `(A > B)` and `(A ~ B)` are also well-formed formulae
-* and every well-formed propositinal formula can be obtained by applying finitely many of above rules.
+* every well-formed propositinal formula can be obtained by applying finitely many of above rules.
 
 For example, formula `(A > B) & (A ~ *C)` is well-formed, but `A & (B &)` is not.
 
