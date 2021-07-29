@@ -112,6 +112,8 @@ void check_tableaux(Tnode* node)
             occurence[node->sign][node->root->symbol]++;
             if (occurence[1 - (node->sign)][node->root->symbol] > 0) // if there is occurence of letter with opposite sign
                 node->closed = true;
+            if (occurence[F]['1'] > 0 || occurence[T]['0'] > 0)
+                node->closed = true;
         }
 
         check_tableaux(node->left);
@@ -153,7 +155,7 @@ void all_letters(Tnode* node, bool in_formula[])
 {
     if (node)
     {
-        if (is_letter(node->root->symbol))
+        if (is_letter(node->root->symbol) && node->root->symbol != '0' && node->root->symbol != '1')
             in_formula[node->root->symbol] = true;
         all_letters(node->left, in_formula);
         all_letters(node->right, in_formula);
