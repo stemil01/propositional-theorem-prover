@@ -53,7 +53,8 @@ void print_formula_file(Node* root, ofstream& file) // customized print_formula
 
 void print_signed_file(Tnode* root, ofstream& file)
 {
-    file <<"$" << root->sign << "\\;";
+    char root_sign = root->sign ? 'T' : 'F';
+    file <<"$" << root_sign << "\\;";
     print_formula_file(root->root, file);
     file << "$";
 }

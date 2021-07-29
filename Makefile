@@ -1,5 +1,5 @@
-prover: run main.o tree.o well_formed.o tableaux.o
-	g++ -Wall run/main.o run/tree.o run/well_formed.o run/tableaux.o
+prover: run main.o tree.o well_formed.o tableaux.o latex.o
+	g++ -Wall run/main.o run/tree.o run/well_formed.o run/tableaux.o run/latex.o
 
 run:
 	mkdir -p run
@@ -15,3 +15,6 @@ well_formed.o: well_formed.hpp well_formed.cpp
 
 tableaux.o: tableaux.hpp tableaux.cpp
 	g++ -c -Wall tableaux.cpp -o run/tableaux.o
+
+latex.o: latex.hpp latex.cpp
+	g++ -c -Wall latex.cpp -o run/latex.o
