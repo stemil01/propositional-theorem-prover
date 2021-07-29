@@ -7,9 +7,6 @@ using namespace std;
 
 static int occurence[2][MAX_CHAR];
 
-static Sign interpretation[MAX_CHAR];
-static bool in_formula[MAX_CHAR];
-
 void find_leaves(Tnode* node, vector<Tnode*> &leaves)
 {
     if (node)
@@ -163,27 +160,88 @@ Tnode* create_tableaux(Node* formula)
     return root;
 }
 
-void countermodel(Tnode* root)
+void all_letters(Tnode* root, bool in_formula[])
 {
     if (root)
     {
         if (is_letter(root->formula->symbol))
+            in_formula[root->formula->symbol] = true;
+        all_letters(root->left, in_formula);
+        all_letters(root->right, in_formula);
+    }
+}
+
+
+void variations(bool in_formula[], Sign interpretation[], int position)
+{
+    if (position < MAX_CHAR)
+    {
+        if (in_formula[position])
         {
-            interpretation[root->formula->symbol] = root->sign;
-            if (!in_formula[root->formula->symbol])
-                in_formula[root->formula->symbol] = true;
-        }
-        if (root->left == NULL && root->right == NULL)
-        {
-            for (int i = 0; i < MAX_CHAR; i++)
-                if (in_formula[i])
-                    cout << "I(" << (char)i << ") = " << interpretation[i] << "; ";
-            cout << '\n';
+            if (occurence[F][position])
+            {
+                interpretation[position] = F;
+                variations(in_formula, interpretation, position + 1);
+            }
+            else if (occurence[T][position])
+            {
+                interpretation[position] = T;
+                variations(in_formula, interpretation, position + 1);
+            }
+            else
+            {
+                // the letter is "free" and can have both truth values
+                interpretation[position] = F;
+                variations(in_formula, interpretation, position + 1);
+
+                interpretation[position] = T;
+                variations(in_formula, interpretation, position + 1);
+            }
         }
         else
+            variations(in_formula, interpretation, position + 1);
+    }
+    else
+    {
+        for (int i = 0; i < MAX_CHAR; i++)
+            if (in_formula[i])
+                cout << "I(" << (char)i << ") = " << interpretation[i] << "; ";
+        cout << '\n';
+    }
+}
+
+void countermodels(Tnode* root, bool in_formula[], Sign interpretation[])
+{
+    if (root && !root->closed)
+    {
+        if (is_letter(root->formula->symbol))
+            occurence[root->sign][root->formula->symbol]++;
+        if (root->left == NULL && root->right == NULL)
+            variations(in_formula, interpretation, 0); // generate all variations for "free" letters
+        else
         {
-            countermodel(root->left);
-            countermodel(root->right);
+            // left side
+            countermodels(root->left, in_formula, interpretation);
+            if (root->left && !root->left->closed && is_letter(root->left->formula->symbol))
+                occurence[root->left->sign][root->left->formula->symbol]--;
+
+            // right side
+            countermodels(root->right, in_formula, interpretation);
+            if (root->right && !root->right->closed && is_letter(root->right->formula->symbol))
+                occurence[root->right->sign][root->right->formula->symbol]--;
         }
     }
+}
+
+void print_countermodels(Tnode* root)
+{
+    // go throught tableaux to find all letters that occur
+    bool in_formula[MAX_CHAR];
+    Sign interpretation[MAX_CHAR];
+    for (int i = 0; i < MAX_CHAR; i++)
+        in_formula[i] = false;
+    all_letters(root, in_formula);
+
+    // generate all countermodels
+    countermodels(root, in_formula, interpretation);
 }

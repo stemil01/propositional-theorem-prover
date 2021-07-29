@@ -12,6 +12,6 @@ void check_tableaux(Tnode* node);
 
 Tnode* create_tableaux(Node* formula);
 
-void countermodel(Tnode* root);
+void print_countermodels(Tnode* root);
 
 #endif

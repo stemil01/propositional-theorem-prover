@@ -26,10 +26,9 @@ int main()
             {
                 cout << "formula is not tautology\n";
                 cout << "Countermodels? [y/N]: ";
-                char answer;
-                cin >> answer;
+                char answer = cin.get();
                 if (answer == 'Y' || answer == 'y')
-                    countermodel(tableaux);
+                    print_countermodels(tableaux);
             }
             t_free_tree(tableaux);
         }
