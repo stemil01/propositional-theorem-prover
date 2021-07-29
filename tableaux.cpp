@@ -41,61 +41,61 @@ Tnode* find_root(Tnode* root)
 void apply_rules(Tnode* tnode, Tnode* leaf)
 {
     // ALFA FORMULAS
-    if (tnode->sign == 'T' && tnode->root->symbol == '&') // T A&B
+    if (tnode->sign == T && tnode->root->symbol == '&') // T A&B
     {
-        Tnode *tnode1 = create_tnode('T', tnode->root->left);
-        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        Tnode *tnode1 = create_tnode(T, tnode->root->left);
+        Tnode *tnode2 = create_tnode(T, tnode->root->right);
         leaf->left = tnode1;
         tnode1->left = tnode2;
     }
-    if (tnode->sign == 'F' && tnode->root->symbol == '|') // F A|B
+    if (tnode->sign == F && tnode->root->symbol == '|') // F A|B
     {
-        Tnode *tnode1 = create_tnode('F', tnode->root->left);
-        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        Tnode *tnode1 = create_tnode(F, tnode->root->left);
+        Tnode *tnode2 = create_tnode(F, tnode->root->right);
         leaf->left = tnode1;
         tnode1->left = tnode2;
     }
-    if (tnode->sign == 'F' && tnode->root->symbol == '>') // F A>B
+    if (tnode->sign == F && tnode->root->symbol == '>') // F A>B
     {
-        Tnode *tnode1 = create_tnode('T', tnode->root->left);
-        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        Tnode *tnode1 = create_tnode(T, tnode->root->left);
+        Tnode *tnode2 = create_tnode(F, tnode->root->right);
         leaf->left = tnode1;
         tnode1->left = tnode2;
     }
-    if (tnode->sign == 'F' && tnode->root->symbol == '*') // F *A
+    if (tnode->sign == F && tnode->root->symbol == '*') // F *A
     {
-        Tnode *tnode1 = create_tnode('T', tnode->root->right);
-        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        Tnode *tnode1 = create_tnode(T, tnode->root->right);
+        Tnode *tnode2 = create_tnode(T, tnode->root->right);
         leaf->left = tnode1;
         tnode1->left = tnode2;
     }
-    if (tnode->sign == 'T' && tnode->root->symbol == '*') // T *A
+    if (tnode->sign == T && tnode->root->symbol == '*') // T *A
     {
-        Tnode *tnode1 = create_tnode('F', tnode->root->right);
-        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        Tnode *tnode1 = create_tnode(F, tnode->root->right);
+        Tnode *tnode2 = create_tnode(F, tnode->root->right);
         leaf->left = tnode1;
         tnode1->left = tnode2;
     }
 
     // BETA FORMULAS
-    if (tnode->sign == 'F' && tnode->root->symbol == '&') // F A&B
+    if (tnode->sign == F && tnode->root->symbol == '&') // F A&B
     {
-        Tnode *tnode1 = create_tnode('F', tnode->root->left);
-        Tnode *tnode2 = create_tnode('F', tnode->root->right);
+        Tnode *tnode1 = create_tnode(F, tnode->root->left);
+        Tnode *tnode2 = create_tnode(F, tnode->root->right);
         leaf->left = tnode1;
         leaf->right = tnode2;
     }
-    if (tnode->sign == 'T' && tnode->root->symbol == '|') // T A|B
+    if (tnode->sign == T && tnode->root->symbol == '|') // T A|B
     {
-        Tnode *tnode1 = create_tnode('T', tnode->root->left);
-        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        Tnode *tnode1 = create_tnode(T, tnode->root->left);
+        Tnode *tnode2 = create_tnode(T, tnode->root->right);
         leaf->left = tnode1;
         leaf->right = tnode2;
     }
-    if (tnode->sign == 'T' && tnode->root->symbol == '>') // T A>B
+    if (tnode->sign == T && tnode->root->symbol == '>') // T A>B
     {
-        Tnode *tnode1 = create_tnode('F', tnode->root->left);
-        Tnode *tnode2 = create_tnode('T', tnode->root->right);
+        Tnode *tnode1 = create_tnode(F, tnode->root->left);
+        Tnode *tnode2 = create_tnode(T, tnode->root->right);
         leaf->left = tnode1;
         leaf->right = tnode2;
     }
@@ -103,7 +103,7 @@ void apply_rules(Tnode* tnode, Tnode* leaf)
 
 Tnode* create_tableuax(Node* root)
 {
-    Tnode *troot = create_tnode('F', root); // starting tableaux with F "formula"
+    Tnode *troot = create_tnode(F, root); // starting tableaux with F "formula"
 
     while (Tnode *tnode = find_root(troot))
     {

@@ -72,7 +72,7 @@ void free_tree(Node* root)
     }
 }
 
-Tnode* create_tnode(char s, Node *root)
+Tnode* create_tnode(Sign s, Node *root)
 {
     Tnode *tnode = new Tnode;
     if (tnode == NULL)
@@ -114,7 +114,7 @@ void print_signed_2D(Tnode *troot, int space)
     for(int i = COUNT; i < space ; i++)
         printf(" ");
 
-    cout<<troot->sign<< " ";
+    troot->sign ? cout << "T " : cout << "F ";
     print_formula(troot->root);
     cout<<'\n';
 
