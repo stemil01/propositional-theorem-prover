@@ -3,6 +3,7 @@
 using namespace std;
 
 #define MAX_SIZE 1003 // max size is actually MAX_SIZE - 3 because of added brackets
+#define MAX_CHAR 128
 
 enum Sign { F, T };
 

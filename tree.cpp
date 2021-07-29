@@ -83,6 +83,7 @@ Tnode* create_tnode(Sign s, Node *root)
     tnode->left = NULL;
     tnode->right = NULL;
     tnode->used = false;
+    tnode->closed = false;
 
     return tnode;
 }

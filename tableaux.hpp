@@ -7,6 +7,8 @@ Tnode* find_root(Tnode* root);
 
 void apply_rules(Tnode* tnode, Tnode* leaf);
 
-Tnode* create_tableuax(Node* root_formula);
+Tnode* create_tableaux(Node* root);
+
+void print_countermodels(Tnode* root);
 
 #endif
