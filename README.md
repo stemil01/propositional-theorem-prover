@@ -28,5 +28,5 @@ Initial formula is places in root of tableaux with symbol *F*.
 Then all other nodes are obtained by applying one of two rules, alpha and beta, both of them geretating two nodes as shown in picture bellow.
 
 <p align="center">
-  <img width="200" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png">
+  <img width="50%" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png">
 </p>
