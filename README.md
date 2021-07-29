@@ -32,10 +32,9 @@ Then all other nodes are obtained by applying one of two following rules, named 
   <img width="40%" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png">
 </p>
 
-|           | Are   | Cool  |
-| --------- |:-----:| -----:|
+|   Alpha rule         |
 | `T A & B` | `T A` | `T B` |
-| `F A | B` | `F A` | `F B` |
+| `F A \| B` | `F A` | `F B` |
 | `F A > B` | `T A` | `F B` |
 |   `T *A`  | `F A` | `F A` |
 |   `F *A`  | `T A` | `T A` |
