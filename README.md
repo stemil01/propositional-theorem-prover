@@ -24,9 +24,18 @@ The last part will generate LaTeX file *tableaux.tex* for visual representation 
 
 ## How it works?
 Method of analytic tableaux works by creating a binart tree called *tableaux* in which every node consists of propositional formula and symbol *F* or *T*.
-Initial formula is places in root of tableaux with symbol *F*.
-Then all other nodes are obtained by applying one of two rules, alpha and beta, both of them geretating two nodes as shown in picture bellow.
+
+Tableaux is initialized with given formula in the root with symbol *F*.
+Then all other nodes are obtained by applying one of two following rules, named alpha and beta, both of them creating two new nodes as shown in picture bellow and tables.
 
 <p align="center">
-  <img width="50%" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png">
+  <img width="40%" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png">
 </p>
+
+|           | Are   | Cool  |
+| --------- |:-----:| -----:|
+| `T A & B` | `T A` | `T B` |
+| `F A | B` | `F A` | `F B` |
+| `F A > B` | `T A` | `F B` |
+|   `T *A`  | `F A` | `F A` |
+|   `F *A`  | `T A` | `T A` |
