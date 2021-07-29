@@ -42,7 +42,7 @@ Tnode* find_root(Tnode* root)
 
 void apply_rules(Tnode* tnode, Tnode* leaf)
 {
-    // ALFA FORMULAS
+    // ALFA FORMULAE
     if (tnode->sign == T && tnode->root->symbol == '&') // T A&B
     {
         Tnode *tnode1 = create_tnode(T, tnode->root->left);
@@ -79,7 +79,7 @@ void apply_rules(Tnode* tnode, Tnode* leaf)
         tnode1->left = tnode2;
     }
 
-    // BETA FORMULAS
+    // BETA FORMULAE
     if (tnode->sign == F && tnode->root->symbol == '&') // F A&B
     {
         Tnode *tnode1 = create_tnode(F, tnode->root->left);
