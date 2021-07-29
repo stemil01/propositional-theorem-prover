@@ -17,6 +17,7 @@ typedef struct Tnode
     Sign sign;
     Node *root;
     bool used, closed;
+    float position;
     struct Tnode *left, *right;
 
 } Tnode;
