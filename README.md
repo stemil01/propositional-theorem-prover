@@ -33,8 +33,9 @@ Then all other nodes are obtained by applying one of two following rules, named 
 </p>
 
 |   Alpha rule         |
+| --------- |:-----:| -----:|
 | `T A & B` | `T A` | `T B` |
-| `F A \| B` | `F A` | `F B` |
+| `F A | B` | `F A` | `F B` |
 | `F A > B` | `T A` | `F B` |
 |   `T *A`  | `F A` | `F A` |
 |   `F *A`  | `T A` | `T A` |
