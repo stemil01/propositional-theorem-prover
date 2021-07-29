@@ -7,10 +7,10 @@ Everything was written in C++, so any standard compiler can do the job. In this 
 
 ## Input
 Fist line should contain propositional formula.
-It can contain all english letters(lowecase or uppercase), logical constants(`0` and `1`), logical symbols(`*`, `&`, `|`, `>`, `~` that represent logical *negation*, *conjunction*, *disjuntion*, *implication* and *equivalence* respectively), brackets and arbitary number of spaces.
-Entered input is then checked for validity in a way that formula is considered valid(well-formed) if and only if:
-* is a letter(english letter character, either lowercase or capital)
-* is a logical constant(0 or 1)
+It can contain all english letters (lowecase or uppercase), logical constants (`0` and `1`), logical symbols (`*`, `&`, `|`, `>`, `~` that represent logical *negation*, *conjunction*, *disjuntion*, *implication* and *equivalence* respectively), brackets and arbitary number of spaces.
+Entered input is then checked for validity in a way that formula is considered valid (well-formed) if and only if:
+* is a letter (english letter character, either lowercase or capital)
+* is a logical constant (0 or 1)
 * if A and B are well-formed propositinal formulae then `(*A)`, `(A & B)`, `(A | B)`, `(A > B)` and `(A ~ B)` are also well-formed formulae
 * and every well-formed propositinal formula can be obtained by applying finitely many of above rules.
 
