@@ -27,4 +27,4 @@ Method of analytic tableaux works by creating a binart tree called *tableaux* in
 Initial formula is places in root of tableaux with symbol *F*.
 Then all other nodes are obtained by applying one of two rules, alpha and beta, both of them geretating two nodes as shown in picture bellow.
 
-<img src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png" style="display: block; margin:auto; width: 50%">
+<img src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png" style="display: block; margin: auto; width: 50%">
