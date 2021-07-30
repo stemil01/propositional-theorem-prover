@@ -1,9 +1,9 @@
 # Automated theorem prover for propositinal logic
-The program check wheter the propositial formula is tautology and in negative case prints all countermodels for it (i.e. all interpretation for which the formula is false).
+The program checks wheter the propositial formula is tautology and in negative case prints all countermodels for it (i.e. all interpretation for which the formula is false).
 The method of analytic tableaux is used for that and program will generate complete tableaux for a given formula.
 
 ## Running
-Everything was written in C++, so any standard compiler can do the job. In this case, we used GCC and included the *Makefile* for easier compilation with `make`.
+Everything was written in C++, so any standard compiler can do the job. In this case, we used GCC and included *Makefile* for easier compilation with `make`.
 
 ## Input
 Fist line should contain propositional formula.
