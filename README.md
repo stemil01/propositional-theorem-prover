@@ -1,4 +1,4 @@
-# Automated theorem prover for propositinal logic
+# Automated theorem prover for propositional logic
 The program checks wheter the propositial formula is tautology and in negative case prints all countermodels for it (i.e. all interpretation for which the formula is false).
 The method of analytic tableaux is used for that and program will generate complete tableaux for a given formula.
 
