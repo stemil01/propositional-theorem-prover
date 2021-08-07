@@ -1,4 +1,4 @@
-# Automated theorem prover for propositinal logic
+# Automated theorem prover for propositional logic
 The program checks wheter the propositial formula is tautology and in negative case prints all countermodels for it (i.e. all interpretation for which the formula is false).
 The method of analytic tableaux is used for that and program will generate complete tableaux for a given formula.
 
@@ -6,13 +6,13 @@ The method of analytic tableaux is used for that and program will generate compl
 Everything was written in C++, so any standard compiler can do the job. In this case, we used GCC and included *Makefile* for easier compilation with `make`.
 
 ## Input
-Fist line should contain propositional formula.
-It can contain all english letters (lowecase or uppercase), logical constants (`0` and `1`), logical symbols (`*`, `&`, `|`, `>`, `~` that represent logical *negation*, *conjunction*, *disjuntion*, *implication* and *equivalence* respectively), brackets and arbitary number of spaces.
+First line should contain propositional formula.
+It can contain all english letters (lowecase or uppercase), logical constants (`0` and `1`), logical symbols (`*`, `&`, `|`, `>`, `~` that represent logical *negation*, *conjunction*, *disjunction*, *implication* and *equivalence* respectively), brackets and arbitrary number of spaces.
 Entered input is then checked for validity in a way that formula is considered valid (well-formed) if and only if:
 * is a letter (english letter character, either lowercase or capital)
 * is a logical constant (`0` or `1`)
 * if `A` and `B` are well-formed propositinal formulae then `(*A)`, `(A & B)`, `(A | B)`, `(A > B)` and `(A ~ B)` are also well-formed formulae
-* every well-formed propositinal formula can be obtained by applying finitely many of above rules.
+* every well-formed propositional formula can be obtained by applying finitely many of above rules.
 
 For example, formula `(A > B) & (A ~ *C)` is well-formed, but `A & (B &)` is not.
 
@@ -34,7 +34,7 @@ Then all other nodes are obtained by applying one of two following rules, named 
 <p align="center"> <img width="90%" src="https://user-images.githubusercontent.com/44095197/127530688-09437a81-778f-4001-a4b0-577691f7efad.png"> </p></table>
 
 Rules are applying while possible and that is how the tableaux is created.
-Process for checking wheter the formula is tautology is simply going throught all tree braches and if there are two nodes in form of `F A` and `T A` then we call that branch closed.
+Process for checking wheter the formula is tautology is simply going throught all tree branches and if there are two nodes in form of `F A` and `T A` then we call that branch closed.
 
-If all branches are closed negation of the formula is unsatifiable and thus the formula is tautology.
-If not we get countermodels by going throught non closed branches.
+If all branches are closed negation of the formula is unsatisfiable and thus the formula is tautology.
+If not we get countermodels by going throught closed branches.
