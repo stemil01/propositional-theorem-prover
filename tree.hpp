@@ -1,5 +1,6 @@
 #ifndef _TREE_HPP_
 #define _TREE_HPP_
+#include <vector>
 using namespace std;
 
 #define MAX_SIZE 1003 // max size is actually MAX_SIZE - 3 because of added brackets
@@ -19,6 +20,8 @@ typedef struct Tnode
     Node *root;
     bool used, closed;
     float position;
+    int number;
+    vector<Tnode*>Rule_nodes;
     struct Tnode *left, *right;
 
 } Tnode;
@@ -31,6 +34,7 @@ void free_tree(Node* root);
 
 Tnode* create_tnode(Sign s, Node *root);
 void print_signed_2D(Tnode *troot, int space);
+void print_enumerated_2D(Tnode* node);
 void t_free_tree(Tnode* root);
 
 #endif

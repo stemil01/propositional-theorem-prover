@@ -21,7 +21,7 @@ int main()
         Tnode *tableaux = create_tableaux(root);
         if (tableaux)
         {
-            print_signed_2D(tableaux, 0); cout << '\n';
+            print_enumerated_2D(tableaux); cout << '\n';
             tex_file(tableaux);
             if (tableaux->closed)
                 cout << "formula is tautology\n";
@@ -39,6 +39,7 @@ int main()
     }
     else
         printf("invalid unput\n");
+
 
     return 0;
 }

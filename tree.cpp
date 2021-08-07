@@ -2,6 +2,7 @@
 #include <string>
 #include "tree.hpp"
 #include "well_formed.hpp"
+#include "tableaux.hpp"
 using namespace std;
 
 Node* create_node(char symbol)
@@ -115,10 +116,17 @@ void print_signed_2D(Tnode *troot, int space)
     for(int i = COUNT; i < space ; i++)
         printf(" ");
 
+    cout << "(" << troot->number << ") ";
     troot->sign ? cout << "T " : cout << "F ";
     print_formula(troot->root);
     cout<<'\n';
 
     print_signed_2D(troot->left, space);
 
+}
+
+void print_enumerated_2D(Tnode* node)
+{
+    find_numbers(node);
+    print_signed_2D(node, 0);
 }

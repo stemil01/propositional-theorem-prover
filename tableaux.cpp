@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <deque>
 #include "tree.hpp"
 #include "well_formed.hpp"
 #include "tableaux.hpp"
@@ -40,9 +41,29 @@ Tnode* find_root(Tnode* root)
     return left ? left : right;
 }
 
+bool is_alpha_rule(Tnode *node)
+{
+    if (node->sign == T && node->root->symbol == '&') return true;
+    if (node->sign == F && node->root->symbol == '|') return true;
+    if (node->sign == F && node->root->symbol == '>') return true;
+    if (node->sign == F && node->root->symbol == '*') return true;
+    if (node->sign == T && node->root->symbol == '*') return true;
+
+    return false;
+}
+
+bool is_beta_rule(Tnode *node)
+{
+    if (node->sign == F && node->root->symbol == '&') return true;
+    if (node->sign == T && node->root->symbol == '|') return true;
+    if (node->sign == T && node->root->symbol == '>') return true;
+
+    return false;
+}
+
 void apply_rules(Tnode* tnode, Tnode* leaf)
 {
-    // ALFA FORMULAE
+    // ALPHA FORMULAE
     if (tnode->sign == T && tnode->root->symbol == '&') // T A&B
     {
         Tnode *tnode1 = create_tnode(T, tnode->root->left);
@@ -131,6 +152,24 @@ void check_tableaux(Tnode* node)
     }
 }
 
+void find_numbers(Tnode* node)
+{
+    int number = 1;
+    deque<Tnode*> Number;
+    Number.push_back(node);
+    while(!Number.empty())
+    {
+        Tnode* tmp = Number.front();
+        tmp->number = number++;
+        if(tmp->left)
+            Number.push_back(tmp->left);
+        if(tmp->right)
+            Number.push_back(tmp->right);
+
+        Number.pop_front();
+    }
+}
+
 Tnode* create_tableaux(Node* root)
 {
     Tnode *troot = create_tnode(F, root); // starting tableaux with F "formula"
@@ -140,6 +179,8 @@ Tnode* create_tableaux(Node* root)
         tnode->used = true;
 
         find_leaves(tnode);
+
+        tnode->Rule_nodes = leaves;
 
         for (Tnode *leaf : leaves)
             if (!leaf->closed)
