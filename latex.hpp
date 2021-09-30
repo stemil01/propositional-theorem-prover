@@ -25,6 +25,6 @@ void print_branch_file(Tnode* branch[], int len, ofstream& file);
 
 void all_branches_tex(Tnode* node, int len, ofstream& file, Tnode* one, Tnode* two, bool closed_branch);
 
-void tex_file(Tnode* root);
+void tex_file(Tnode* root, int n);
 
 #endif

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 #include "tree.hpp"
 #include "well_formed.hpp"
 #include "tableaux.hpp"
@@ -183,6 +184,40 @@ void generate_tex(Tnode* root, ofstream& file)
     file <<"\\begin{flushleft}\\Large{Branches:}\\end{flushleft}\n\\flushleft\n";
 }
 
+void generate_tex_long_formula(Tnode* root, ofstream& file)
+{
+
+    int depth = tableaux_depth(root);
+
+    file << "\\flushleft";
+
+    for (int i = 1 ; i <= depth; i++)
+    {
+        level_i(root, i);
+        int length = Level.size();
+
+        for (int j = 0 ; j < length ; j++)
+        {
+            file << "{";
+            print_signed_file(Level[j], file);
+            file << "\\newline";
+
+            if (j == length - 1)
+                file << "\\\\[2\\baselineskip]";
+
+            file << "}\\unboldmath";
+        }
+
+        file << "\n";
+
+        Level.clear();
+
+    }
+
+    file <<"\n\\vspace{12pt}\n";
+    file <<"\\begin{flushleft}\\Large{Branches:}\\end{flushleft}\n\\flushleft\n";
+}
+
 static Tnode* branch[MAX_SIZE]; //store pointers to formulae of current branch
 
 static Tnode* letters[2][MAX_CHAR][MAX_SIZE];
@@ -266,10 +301,10 @@ void meaning(ofstream& file) // abbreviations and their meanings
     file <<"second part shows all pairs of nodes created by that rule\\newline}\n";
     file <<"{$X$}{ - end of closed branch\\newline}\n";
     file <<"{$|(n_1)\\;T\\backslash F\\;a\\;\\;and\\;\\;(n_2)\\;F\\backslash T\\;a|$}{ - reason for closing a branch; $n_1$ and $n_2$ are numbers of nodes\\newline}\n";
-    file <<"{$|(n)\\;F\\;\\top|$ or $|(n)\\;T\\;bot|$ - reason for closing a branch; $n$ is number of node}";
+    file <<"{$|(n)\\;F\\;\\top|$ or $|(n)\\;T\\;bot|$ - reason for closing a branch; $n$ is a number of node}";
 }
 
-void tex_file(Tnode* root)
+void tex_file(Tnode* root, int n)
 {
     find_positions(root, 0, TEXT_WIDTH);
 
@@ -279,7 +314,11 @@ void tex_file(Tnode* root)
 
     file << "\\usepackage[left=0.44482502in, right=0.44482502in]{geometry}\n\\begin{document}\n";
 
-    generate_tex(root, file);
+    if (n > 25)
+        generate_tex_long_formula(root, file);
+    else
+        generate_tex(root, file);
+
     all_branches_tex(root, 0, file, NULL, NULL, false);
     meaning(file);
 

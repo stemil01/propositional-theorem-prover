@@ -22,7 +22,7 @@ int main()
         if (tableaux)
         {
             print_enumerated_2D(tableaux); cout << '\n';
-            tex_file(tableaux);
+            tex_file(tableaux, sizeof(input));
             if (tableaux->closed)
                 cout << "formula is tautology\n";
             else
