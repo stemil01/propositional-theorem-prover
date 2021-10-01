@@ -29,7 +29,7 @@ Tnode* find_root(Tnode* root)
         return root;
 
     if(root && root->left == NULL)
-        left =  NULL;
+        left = NULL;
     else
         left = find_root(root->left);
 
