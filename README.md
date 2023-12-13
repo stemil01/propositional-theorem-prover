@@ -23,7 +23,7 @@ Default option won't find countermodels, but if chosen it will print all possibl
 The last part will generate LaTeX file *tableaux.tex* for visual representation of tableaux.
 
 ## How it works?
-Detailed explanation can be found [here] (paper in Serbian).
+Detailed explanation can be found [here](/literature/tabloi.pdf) (paper in Serbian).
 In a nutshell, method of analytic tableaux works by creating a binary tree called *tableaux* in which every node consists of propositional formula and symbol *F* or *T*.
 
 Tableaux is initialized by putting given formula in its root with symbol *F*.
@@ -39,5 +39,3 @@ Process for checking wheter the formula is tautology is simply going throught al
 
 If all branches are closed negation of the formula is unsatisfiable and thus the formula is tautology.
 If not we get countermodels by going throught closed branches.
-
-[here]: (/literature/tabloi.pdf)
