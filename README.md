@@ -40,4 +40,4 @@ Process for checking wheter the formula is tautology is simply going throught al
 If all branches are closed negation of the formula is unsatisfiable and thus the formula is tautology.
 If not we get countermodels by going throught closed branches.
 
-[here](https://github.com/stemil01/propositional-theorem-prover/blob/main/literature/tabloi.pdf)
+[here]: (https://github.com/stemil01/propositional-theorem-prover/blob/main/literature/tabloi.pdf)
